@@ -10,7 +10,7 @@ import { DependencyExtractor } from '../../base';
 import type { TerraformDefinitionFile } from '../../hcl/types';
 
 export const githubRefMatchRegex = regEx(
-  /github\.com([/:])(?<project>[^/]+\/[a-z0-9-_.]+).*\?(depth=\d+&)?ref=(?<tag>.*?)(&depth=\d+)?$/i
+  /github\.com([/:])(?<project>[^/]+\/[a-z0-9-_.]+)(?<module_path>.*)\?(depth=\d+&)?ref=(?<tag>.*?)(&depth=\d+)?$/i
 );
 export const bitbucketRefMatchRegex = regEx(
   /(?:git::)?(?<url>(?:http|https|ssh)?(?::\/\/)?(?:.*@)?(?<path>bitbucket\.org\/(?<workspace>.*)\/(?<project>.*).git\/?(?<subfolder>.*)))\?(depth=\d+&)?ref=(?<tag>.*?)(&depth=\d+)?$/
@@ -67,7 +67,7 @@ export class ModuleExtractor extends DependencyExtractor {
         ''
       );
       dep.depType = 'module';
-      dep.depName = 'github.com/' + dep.packageName;
+      dep.depName = 'github.com/' + dep.packageName + githubRefMatch.groups.module_path;
       dep.currentValue = githubRefMatch.groups.tag;
       dep.datasource = GithubTagsDatasource.id;
     } else if (bitbucketRefMatch?.groups) {
