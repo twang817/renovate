@@ -1,7 +1,7 @@
 {
-  "name": "renovate",
+  "name": "@twang817/renovate-csm",
   "description": "Automated dependency updates. Flexible so you don't need to be.",
-  "version": "0.0.0-semantic-release",
+  "version": "35.55.1",
   "bin": {
     "renovate": "dist/renovate.js",
     "renovate-config-validator": "dist/config-validator.js"
